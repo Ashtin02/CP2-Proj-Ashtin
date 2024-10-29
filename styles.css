@@ -3,13 +3,10 @@
   Ashtin Rivada
   10-01-24
 
-  This is my CSS file that will hold the CSS for all three of my HTML pages to give them
+  This is my CSS file that will hold the CSS for all  of my HTML pages to give them
   a consistant look! 
 */
 
-/*
-  Note: This body rule set is to get you started
-*/
 body {
   background-color: #f4f4f4;
   font-family: "Helvetica", sans-serif;
@@ -139,4 +136,14 @@ nav ul li a{
   display: flex;
   justify-content: center;
   font-size: x-small;
+}
+
+#memeBio{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 80%;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 25px;
 }

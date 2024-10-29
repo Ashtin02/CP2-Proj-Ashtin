@@ -3,7 +3,6 @@
  function fetchData(){
     let button = document.getElementById("MemeButton");
     button.addEventListener("click", async () =>{
-        try{
             let api = "https://api.imgflip.com/get_memes"
             fetch(api) 
                 .then(statusCheck)
@@ -12,35 +11,49 @@
                 .catch(handleError)
         
         
-        
-        //captionMeme(MemeId, "AshRiv", "Riv02$00$",topCaption, botCaption )
-
-        }catch (error){
-            handleError(error);
-        }
     });
 }
 
 
 
 async function ProcessData(data){ 
-    let oldImg = document.getElementById("MemePicture");
-    let memeContainer = document.getElementById("MemeContainer")
-    let newImg = document.createElement("img");
     let topCaption = document.getElementById("caption0").value;
     let botCaption = document.getElementById("caption1").value;
-    newImg.src = data.data.memes[0].url;
-    newImg.alt = "Meme"
-    newImg.id = "MemePicture"
+
+    if(topCaption === "" || botCaption ===""){
+        handleError("Please fill out both Top Section and Bottom Section before using the generate meme button.")
+        return;
+    }
+    let memeID = data.data.memes[0].id;
+
+    let captionMemeUrl = "https://api.imgflip.com/caption_image"
 
 
-    memeContainer.replaceChild(newImg, oldImg);
+    const formData = new URLSearchParams();
+    formData.append('template_id',  memeID);
+    formData.append('username', 'AshRiv');
+    formData.append('password', 'Riv02$00$'); 
+    formData.append('text0', topCaption);
+    formData.append('text1', botCaption);
+
+    fetch(captionMemeUrl, {
+        method: "POST", 
+        headers: {
+            "Content-Type" : "application/x-www-form-urlencoded"
+        },
+        body: formData
+    })
+    .then(statusCheck)
+    .then(resp => resp.json())
+    .then(post)
+    .catch(handleError)
 }
 
 fetchData();
 
 async function handleError(err){
-    alert(console.error(err))
+    alert(err)
+    
 }
 async function statusCheck(response){
 if(!response.ok){
@@ -49,22 +62,15 @@ if(!response.ok){
 return response; 
 }
 
-// async function captionMeme(memeId, userName, Password, text0, text1){
-    
-// }
+async function post(data){
+    let oldImg = document.getElementById("MemePicture");
+    let memeContainer = document.getElementById("MemeContainer")
+    let newImg = document.createElement("img");
 
-// async function getMemeData(){
-//     let api = "https://api.imgflip.com/get_memes"
-//     fetch(api) 
-//         .then(statusCheck)
-//         .then(resp => resp.json())
-//         .then(ProcessData)
-//         .catch(handleError)
+    newImg.src = data.data.url;
+    newImg.alt = "Meme"
+    newImg.id = "MemePicture"
 
+    memeContainer.replaceChild(newImg, oldImg);
+};
 
-//     // let resp = await fetch("https://api.imgflip.com/get_memes");
-//     // await statusCheck(resp); 
-//     // let data = await resp.json();
-//     // let url = data.data.memes[0].url;
-//     // let id = data.data.memes[0].id;
-// }
