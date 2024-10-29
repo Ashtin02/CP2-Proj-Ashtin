@@ -12,6 +12,7 @@
         
         
     });
+   
 }
 
 
@@ -47,9 +48,13 @@ async function ProcessData(data){
     .then(resp => resp.json())
     .then(post)
     .catch(handleError)
+
+    document.getElementById("caption0").value = "";
+    document.getElementById("caption1").value = "";
+
 }
 
-fetchData();
+
 
 async function handleError(err){
     alert(err)
@@ -74,3 +79,4 @@ async function post(data){
     memeContainer.replaceChild(newImg, oldImg);
 };
 
+fetchData();
