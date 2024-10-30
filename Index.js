@@ -1,5 +1,7 @@
 "use strict";
 
+document.addEventListener("DOMContentLoaded", fetchData);
+
  function fetchData(){
     let button = document.getElementById("MemeButton");
     button.addEventListener("click", async () =>{
@@ -70,7 +72,7 @@ async function post(data){
     memeContainer.textContent = "Loading..."
     setTimeout(() => {
         let newImg = document.createElement("img");
-        
+
         newImg.src = data.data.url;
         newImg.alt = "Meme"
         newImg.id = "MemePicture"
@@ -79,5 +81,3 @@ async function post(data){
         memeContainer.appendChild(newImg);
 },2500)
 };
-
-fetchData();
