@@ -89,8 +89,10 @@ return response;
  */
 async function post(data){
     let memeContainer = document.getElementById("MemeContainer")
+    let loading = document.getElementById("LoadText")
+    loading.textContent = "Loading..."
 
-    memeContainer.textContent = "Loading..."
+    
     setTimeout(() => {
         let newImg = document.createElement("img");
 
@@ -98,7 +100,7 @@ async function post(data){
         newImg.alt = "Meme"
         newImg.id = "MemePicture"
 
-        memeContainer.textContent = "";
+        loading.classList.add("transparent");
         memeContainer.appendChild(newImg);
 },2500)
 };
