@@ -1,7 +1,12 @@
 "use strict";
 
+
 document.addEventListener("DOMContentLoaded", fetchData);
 
+/**
+ * Fetches the data from the API and instantialized the event listener button
+ * 
+ */
  function fetchData(){
     let button = document.getElementById("MemeButton");
     button.addEventListener("click", async () =>{
@@ -17,7 +22,10 @@ document.addEventListener("DOMContentLoaded", fetchData);
    
 }
 
-
+/**
+ * Processes the data it is given back from fetch data and uses it to caption the meme 
+ * @param {Object} data -data that is retrieved from the API
+ */
 
 async function ProcessData(data){ 
     let topCaption = document.getElementById("caption0").value;
@@ -53,12 +61,21 @@ async function ProcessData(data){
 
 }
 
-
-
+/**
+ * 
+ * @param {String} err - displays error message in meme container depending on what went wrong 
+ */
 async function handleError(err){
     let memeContainer = document.getElementById("MemeContainer");
     memeContainer.innerHTML = err;
 }
+
+/**
+ * 
+ * @param {response} response - HTTP response to check
+ * @returns {response} - the status of the response
+ * @throws {Error} - Error as a response text saying the status is not ok
+ */
 async function statusCheck(response){
 if(!response.ok){
     throw new Error(await response.text());
@@ -66,6 +83,10 @@ if(!response.ok){
 return response; 
 }
 
+/**
+ * posts the meme that is now captioned to the meme container 
+ * @param {Object} data - data containing the url for the newly captioned meme
+ */
 async function post(data){
     let memeContainer = document.getElementById("MemeContainer")
 
