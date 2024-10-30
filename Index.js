@@ -39,9 +39,6 @@ async function ProcessData(data){
 
     fetch(captionMemeUrl, {
         method: "POST", 
-        headers: {
-            "Content-Type" : "application/x-www-form-urlencoded"
-        },
         body: formData
     })
     .then(statusCheck)
@@ -57,8 +54,8 @@ async function ProcessData(data){
 
 
 async function handleError(err){
-    alert(err)
-    
+    let memeContainer = document.getElementById("MemeContainer");
+    memeContainer.innerHTML = err;
 }
 async function statusCheck(response){
 if(!response.ok){
@@ -68,15 +65,19 @@ return response;
 }
 
 async function post(data){
-    let oldImg = document.getElementById("MemePicture");
     let memeContainer = document.getElementById("MemeContainer")
-    let newImg = document.createElement("img");
 
-    newImg.src = data.data.url;
-    newImg.alt = "Meme"
-    newImg.id = "MemePicture"
+    memeContainer.textContent = "Loading..."
+    setTimeout(() => {
+        let newImg = document.createElement("img");
+        
+        newImg.src = data.data.url;
+        newImg.alt = "Meme"
+        newImg.id = "MemePicture"
 
-    memeContainer.replaceChild(newImg, oldImg);
+        memeContainer.textContent = "";
+        memeContainer.appendChild(newImg);
+},2500)
 };
 
 fetchData();
